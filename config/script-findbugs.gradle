@@ -1,0 +1,22 @@
+apply plugin: 'findbugs'
+
+task findbugs(type: FindBugs) {
+
+    excludeFilter = file("$project.rootDir/config/rules-findbugs.xml")
+    classes = fileTree("$project.buildDir/intermediates/javac/")
+    source = fileTree("$project.rootDir/src/")
+    classpath = files()
+
+    ignoreFailures = false
+    effort = "default"
+    reportLevel = "low"
+
+    reports {
+        xml.enabled false
+        html.enabled true
+
+        html {
+            reports.html.setDestination(new File("$project.buildDir/outputs/findbugs/findbugs.html"))
+        }
+    }
+}

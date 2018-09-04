@@ -1,0 +1,36 @@
+import org.ajoberstar.grgit.Grgit
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.ajoberstar.grgit:grgit-gradle:3.0.0-beta.1"
+    }
+}
+
+
+ext {
+
+    git = Grgit.open(currentDir: projectDir)
+//    gitVersionName = git.tag.list().last().getName()// Pega só o valor da tag
+    gitVersionName = "VersionName"// Pega só o valor da tag
+//    gitVersionName = git.describe()// Pega o valor da tag mais quantidade de comite e hash do comite
+//    gitVersionCode = git.tag.list().size()
+    gitVersionCode = 1
+    gitVersionCodeTime = git.head().time
+}
+
+task printVersion() {
+    doLast({
+        println("Version Name: $gitVersionName")
+        println("Version Code: $gitVersionCode")
+        println("Version Code Time: $gitVersionCodeTime")
+    })
+}
+//dependencies {
+//    compile 'org.ajoberstar.grgit:grgit-core:<version>'
+//}
